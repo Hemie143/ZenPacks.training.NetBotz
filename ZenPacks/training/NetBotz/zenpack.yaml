@@ -1,0 +1,32 @@
+name: ZenPacks.training.NetBotz
+
+classes:
+  NetBotzDevice:
+    base: [zenpacklib.Device]
+    label: NetBotz
+    properties:
+      temp_sensor_count:
+        type: int
+
+  NetBotzTemperatureSensor:
+    base: [zenpacklib.Component]
+    label: Temperature Sensor
+    properties:
+      enclosure:
+        label: Enclosure
+      port:
+        label: Port
+
+device_classes:
+  /NetBotz:
+    zProperties:
+      zPythonClass: ZenPacks.training.NetBotz.NetBotzDevice
+      zSnmpMonitorIgnore: false
+      zCollectorPlugins:
+        - training.snmp.NetBotz
+        - zenoss.snmp.NewDeviceMap
+        - zenoss.snmp.DeviceMap
+        - zenoss.snmp.InterfaceMap
+
+class_relationships:
+  - NetBotzDevice 1:MC NetBotzTemperatureSensor
